@@ -22,7 +22,7 @@ class Twitter
     consumer_secret = @core["consumer_secret"]
     oauth_token = @core["oauth_token"]
     oauth_token_secret = @core["oauth_token_secret"]
-    
+puts @core    
     # oauthパラメータたち
     @oauth_header = {
       # Consumer Key
