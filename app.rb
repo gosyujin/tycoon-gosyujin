@@ -1,7 +1,6 @@
 # encoding: utf-8
 require 'rubygems'
 require 'sinatra'
-require 'pit'
 require 'openssl'
 require 'uri'
 require 'net/http'
@@ -10,20 +9,19 @@ require 'time'
 require './simplejsonparser'
 
 class Twitter
-  def initialize()
+  def initialize(params)
     @get = 'http://api.twitter.com/1/statuses/home_timeline.json'
-    @core = Pit.get("twitter", :require => {
-      "consumer_key" => "your consumer_key", 
-	  "consumer_secret" => "your consumer_secret", 
-	  "oauth_token" => "your oauth_token", 
-	  "oauth_token_secret" => "your oauth_token_secret"
-    })
+    @core = {
+      "consumer_key" => params["a"], 
+      "consumer_secret" => params["b"], 
+      "oauth_token" => params["c"], 
+      "oauth_token_secret" => params["d"]
+    }
     consumer_key = @core["consumer_key"]
     consumer_secret = @core["consumer_secret"]
     oauth_token = @core["oauth_token"]
     oauth_token_secret = @core["oauth_token_secret"]
-puts @core    
-    # oauthパラメータたち
+	
     @oauth_header = {
       # Consumer Key
       "oauth_consumer_key" => consumer_key,
@@ -84,9 +82,9 @@ end
       param = sort_and_concat(@oauth_header)
       res = http.get(uri.path + "?#{param}")
       if res.code == "200" then
-        JsonParser.new.parse(res.body)
+        return JsonParser.new.parse(res.body)
       else
-        print "#{res.code}\n"
+        return res.code
       end
     end
   end
@@ -96,8 +94,12 @@ get '/' do
   tag = "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
             "<a href=''>Reload</a>" + 
             "<dl>"
-  tw = Twitter.new()
+  tw = Twitter.new(params)
   json = tw.get()
+  if json == "401" then 
+    puts "REDIRECT"
+    redirect "/?#{params.sort.map{|i|i.join("=")}.join("&")}"
+  end
   json.each do |tweet|
     tag += "<dt class='head'>#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]})} " + 
 	             "<span class='time'>#{Time.parse(tweet["created_at"]).strftime("%Y/%m/%d %X")}</span></dt>" + 
