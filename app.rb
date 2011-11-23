@@ -94,14 +94,14 @@ end
 
 get '/' do
   tag = "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
-            "<a href="">Reload</a>" + 
+            "<a href=''>Reload</a>" + 
             "<dl>"
   tw = Twitter.new()
   json = tw.get()
   json.each do |tweet|
-    tag += "<dt class="head">#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]})} " + 
-	             "<span class="time">#{Time.parse(tweet["created_at"]).strftime("%Y/%m/%d %X")}</span></dt>" + 
-	            "<dd class="tweet">#{tweet["text"]}</dd>"
+    tag += "<dt class='head'>#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]})} " + 
+	             "<span class='time'>#{Time.parse(tweet["created_at"]).strftime("%Y/%m/%d %X")}</span></dt>" + 
+	            "<dd class='tweet'>#{tweet["text"]}</dd>"
   end
   tag += "</dl>"
   return tag
