@@ -91,6 +91,16 @@ end
 end
 
 get '/' do
+  tag ="<form method='get' action='/show'>" + 
+           "<ul><li>con  <input type='text' name='a' /></li>" + 
+           "<li>con_se <input type='text' name='b' /></li>" + 
+           "<li>oau  <input type='text' name='c' /></li>" + 
+           "<li>oau_se  <input type='text' name='d' /></li>" + 
+           "<li>  <input type='submit' value='submit' /></li></ul>" + 
+           "</form>"
+end
+
+get '/show' do
   tag = "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
             "<a href=''>Reload</a>" + 
             "<dl>"
@@ -98,7 +108,7 @@ get '/' do
   json = tw.get()
   if json == "401" then 
     puts "REDIRECT"
-    redirect "/?#{params.sort.map{|i|i.join("=")}.join("&")}"
+    redirect "/show?#{params.sort.map{|i|i.join("=")}.join("&")}"
   end
   json.each do |tweet|
     tag += "<dt class='head'>#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]})} " + 
