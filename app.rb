@@ -13,7 +13,7 @@ class Twitter
     @get = 'http://api.twitter.com/1/statuses/home_timeline.json'
     @core = {
       "consumer_key" => ENV["CONSUMER_KEY"], 
-      "consumer_secret" => ENV["CONSUMER_KEY"], 
+      "consumer_secret" => ENV["CONSUMER_SECRET"], 
       "oauth_token" => ENV["OAUTH_TOKEN"], 
       "oauth_token_secret" => ENV["OAUTH_TOKEN_SECRET"]
     }
