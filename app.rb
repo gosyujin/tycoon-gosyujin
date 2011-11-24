@@ -12,10 +12,10 @@ class Twitter
   def initialize(params)
     @get = 'http://api.twitter.com/1/statuses/home_timeline.json'
     @core = {
-      "consumer_key" => params["a"], 
-      "consumer_secret" => params["b"], 
-      "oauth_token" => params["c"], 
-      "oauth_token_secret" => params["d"]
+      "consumer_key" => ENV["CONSUMER_KEY"], 
+      "consumer_secret" => ENV["CONSUMER_KEY"], 
+      "oauth_token" => ENV["OAUTH_TOKEN"], 
+      "oauth_token_secret" => ENV["OAUTH_TOKEN_SECRET"]
     }
     consumer_key = @core["consumer_key"]
     consumer_secret = @core["consumer_secret"]
@@ -91,27 +91,17 @@ end
 end
 
 get '/' do
-  tag ="<form method='get' action='/show'>" + 
-           "<ul><li>con  <input type='text' name='a' /></li>" + 
-           "<li>con_se <input type='text' name='b' /></li>" + 
-           "<li>oau  <input type='text' name='c' /></li>" + 
-           "<li>oau_se  <input type='text' name='d' /></li>" + 
-           "<li>  <input type='submit' value='submit' /></li></ul>" + 
-           "</form>"
-end
-
-get '/show' do
   tag = "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
             "<a href=''>Reload</a>" + 
             "<dl>"
-  tw = Twitter.new(params)
+  tw = Twitter.new()
   json = tw.get()
   if json == "401" then 
     puts "REDIRECT"
     redirect "/show?#{params.sort.map{|i|i.join("=")}.join("&")}"
   end
   json.each do |tweet|
-    tag += "<dt class='head'>#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]})} " + 
+    tag += "<dt class='head'>#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]}) " + 
 	             "<span class='time'>#{Time.parse(tweet["created_at"]).strftime("%Y/%m/%d %X")}</span></dt>" + 
 	            "<dd class='tweet'>#{tweet["text"]}</dd>"
   end
