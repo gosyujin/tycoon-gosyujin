@@ -12,11 +12,12 @@ class Twitter
   def initialize(params)
     @get = 'http://api.twitter.com/1/statuses/home_timeline.json'
     @core = {
-      "consumer_key" => ENV["CONSUMER_KEY"], 
-      "consumer_secret" => ENV["CONSUMER_SECRET"], 
-      "oauth_token" => ENV["OAUTH_TOKEN"], 
-      "oauth_token_secret" => ENV["OAUTH_TOKEN_SECRET"]
+      "consumer_key" => ENV['CONSUMER_KEY'], 
+      "consumer_secret" => ENV['CONSUMER_SECRET'], 
+      "oauth_token" => ENV['OAUTH_TOKEN'], 
+      "oauth_token_secret" => ENV['OAUTH_TOKEN_SECRET']
     }
+puts @core
     consumer_key = @core["consumer_key"]
     consumer_secret = @core["consumer_secret"]
     oauth_token = @core["oauth_token"]
