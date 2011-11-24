@@ -92,15 +92,20 @@ end
 end
 
 get '/' do
-  tag = "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
-            "<a href=''>Reload</a>" + 
-            "<dl>"
   tw = Twitter.new()
   json = tw.get()
   if json == "401" then 
     puts "REDIRECT"
     redirect "/show?#{params.sort.map{|i|i.join("=")}.join("&")}"
   end
+  
+  tag = "<style type="text/css">" + 
+        ".head {font-family:ＭＳ 明朝;}" + 
+        ".time {font-size:20px;color:#ffaaaa;}" + 
+        ".tweet {text-align:center;}</style>" + 
+        "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
+        "<a href=''>Reload</a>" + 
+        "<dl>"
   json.each do |tweet|
     tag += "<dt class='head'>#{tweet["user"]["screen_name"]} (#{tweet["user"]["name"]}) " + 
 	             "<span class='time'>#{Time.parse(tweet["created_at"]).strftime("%Y/%m/%d %X")}</span></dt>" + 
