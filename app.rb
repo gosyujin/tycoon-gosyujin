@@ -96,7 +96,7 @@ get '/' do
   json = tw.get()
   if json == "401" then 
     puts "REDIRECT"
-    redirect "/show?#{params.sort.map{|i|i.join("=")}.join("&")}"
+    redirect "/"
   end
   
   tag = "<style type='text/css'>" + 
