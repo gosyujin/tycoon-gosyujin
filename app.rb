@@ -99,7 +99,7 @@ get '/' do
     redirect "/show?#{params.sort.map{|i|i.join("=")}.join("&")}"
   end
   
-  tag = "<style type="text/css">" + 
+  tag = "<style type='text/css'>" + 
         ".head {font-family:ＭＳ 明朝;}" + 
         ".time {font-size:20px;color:#ffaaaa;}" + 
         ".tweet {text-align:center;}</style>" + 
