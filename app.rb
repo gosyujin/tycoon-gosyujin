@@ -100,8 +100,8 @@ get '/' do
   end
   
   tag = "<style type='text/css'>" + 
-        ".head {}" + 
-        ".time {}" + 
+        ".head {border-bottom: 1px solid #CCCCCC;border-left: 5px solid #CCCCCC;}" + 
+        ".time {color: #CCCCCC;}" + 
         ".tweet {}</style>" + 
         "<h1>Hello Tycoon-Timeline powerd by Heroku!!</h1>" + 
         "<a href=''>Reload</a>" + 
